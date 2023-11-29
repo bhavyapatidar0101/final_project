@@ -8,6 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sportsclub.backend.dto.*;
+import com.sportsclub.backend.exceptions.UserNotAddedException;
+import com.sportsclub.backend.exceptions.UserNotDeletedException;
+import com.sportsclub.backend.exceptions.UserNotUpdatedException;
 import com.sportsclub.backend.model.*;
 import com.sportsclub.backend.repository.*;
 
@@ -23,10 +26,13 @@ public class UserServiceImpl implements UserService {
 	@Autowired 
 	private PaymentRepository payment_table;
 	
+	@Autowired
+	private EmailService email;
 	
 
 	@Override
-	public boolean add(UserAddRequestDTO request) {
+	public boolean add(UserAddRequestDTO request) throws UserNotAddedException {
+		try {
 		User row = new User();
 		row.setFirst_name(request.first_name);
 		row.setLast_name(request.last_name);
@@ -36,18 +42,32 @@ public class UserServiceImpl implements UserService {
 		row.setRole(request.role);
 		user_table.save(row);
 		return true;
+		}
+		catch(Exception e) {
+			throw new UserNotAddedException();
+		}
 	}
 
 	@Override
-	public boolean delete(int id) {
+	public boolean delete(int id) throws UserNotDeletedException {
+		try {
 		user_table.deleteById(id);
 		return true;
+		}
+		catch(Exception e) {
+			throw new UserNotDeletedException();
+		}
 	}
 
 	@Override
-	public boolean update(User request) {
+	public boolean update(User request) throws UserNotUpdatedException{
+		try {
 		user_table.save(request);
 		return true;
+		}
+		catch(Exception e) {
+			throw new UserNotUpdatedException();
+		}
 	}
 
 	@Override

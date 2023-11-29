@@ -81,7 +81,7 @@ function Join(){
         setconfirmPassword(v);
         console.log(password,confirmPassword);
 
-        if(confirmPassword.valueOf() === password.valueOf()){
+        if(confirmPassword.valueOf() == password.valueOf()){
             setError(<span className='text-success'><DoneIcon/> Passwords Matched</span>);
             return true;
            

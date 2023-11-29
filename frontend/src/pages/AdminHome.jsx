@@ -35,7 +35,7 @@ function AdminHome(){
             UserService.details().then((response)=>{
                 let resp = response;
                 console.log(resp)
-                setAdmin(resp);
+                setAdmin(resp.data);
             });
 
             UserService.getAll().then((resp)=>{

@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sportsclub.backend.dto.*;
+import com.sportsclub.backend.exceptions.CourseNotAddedException;
+import com.sportsclub.backend.exceptions.CourseNotDeletedException;
+import com.sportsclub.backend.exceptions.CourseNotUpdatedException;
 import com.sportsclub.backend.model.*;
 import com.sportsclub.backend.repository.*;
 
@@ -28,7 +31,8 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 	@Override
-	public boolean add(CourseAddRequestDTO request) {
+	public boolean add(CourseAddRequestDTO request) throws CourseNotAddedException{
+		try {
 		Course course = new Course();
 		course.setName(request.name);
 		course.setDescription(request.description);
@@ -37,10 +41,15 @@ public class CourseServiceImpl implements CourseService{
 		course.setTrainer(user_table.findById(request.trainer_id).get());
 		course_table.save(course);
 		return true;
+		}
+		catch(Exception e) {
+			throw new CourseNotAddedException();
+		}
 	}
 
 	@Override
-	public boolean update(CourseUpdateRequestDTO request) {
+	public boolean update(CourseUpdateRequestDTO request) throws CourseNotUpdatedException{
+		try {
 		Course course = course_table.findById(request.id).get();
 		course.setDescription(request.description);
 		course.setName(request.name);
@@ -50,12 +59,22 @@ public class CourseServiceImpl implements CourseService{
 		course_table.save(course);
 		
 		return true;
+		}
+		
+		catch(Exception e) {
+			throw new CourseNotUpdatedException();
+		}
 	}
 
 	@Override
-	public boolean delete(int id) {
+	public boolean delete(int id) throws CourseNotDeletedException{
+		try {
 		course_table.deleteById(id);
 		return true;
+		}
+		catch(Exception e) {
+			throw new CourseNotDeletedException();
+		}
 	}
 
 	@Override

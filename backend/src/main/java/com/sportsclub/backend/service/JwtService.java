@@ -1,4 +1,4 @@
-package com.sportsclub.backend.auth;
+package com.sportsclub.backend.service;
 
 
 import io.jsonwebtoken.Claims; 

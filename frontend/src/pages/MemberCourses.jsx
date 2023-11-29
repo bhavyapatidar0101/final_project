@@ -45,7 +45,8 @@ function MemberCourses(){
             'transaction':'xxxxxxxxxxx'
         }
         PaymentService.add(DATA).then((r)=>{
-                navigate("/member-courses");
+                window.location.reload();
+
         }).catch((e)=>{
             alert(e);
         });

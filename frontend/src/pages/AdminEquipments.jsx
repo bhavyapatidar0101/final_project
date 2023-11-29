@@ -82,7 +82,7 @@ function AdminEquipments(){
         UserService.details().then((response)=>{
             let resp = response;
             console.log(resp)
-            setAdmin(resp);
+            setAdmin(resp.data);
         });
 
         EquipmentService.getAll().then((response)=>{

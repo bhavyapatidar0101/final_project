@@ -1,4 +1,4 @@
-package com.sportsclub.backend.auth;
+package com.sportsclub.backend.dto;
 
 public class AuthRequest { 
   

@@ -1,4 +1,4 @@
-package com.sportsclub.backend.auth;
+package com.sportsclub.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.security.core.userdetails.UserDetails; 
@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder; 
 import org.springframework.stereotype.Service;
 import com.sportsclub.backend.model.User;
+import com.sportsclub.backend.model.UserInfoDetails;
 import com.sportsclub.backend.repository.UserRepository;
 
 import java.util.Optional; 

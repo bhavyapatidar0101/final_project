@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import com.sportsclub.backend.model.*;
 import com.sportsclub.backend.repository.*;
 import com.sportsclub.backend.dto.*;
+import com.sportsclub.backend.exceptions.PaymentNotAddedException;
+import com.sportsclub.backend.exceptions.PaymentNotDeletedException;
+import com.sportsclub.backend.exceptions.PaymentNotUpdatedException;
 @Service
 public class PaymentServiceImpl implements PaymentService {
 	
@@ -19,7 +22,8 @@ public class PaymentServiceImpl implements PaymentService {
 	private CourseRepository course_table;
 
 	@Override
-	public boolean add(PaymentAddRequestDTO request) {
+	public boolean add(PaymentAddRequestDTO request) throws PaymentNotAddedException{
+		try {
 		Payment row = new Payment();
 		row.setTransaction(request.transaction);
 		row.setMember(user_table.findById(request.member_id).get());
@@ -27,6 +31,10 @@ public class PaymentServiceImpl implements PaymentService {
 		row.setDate(request.date);
 		payment_table.save(row);
 		return true;
+		}
+		catch(Exception e) {
+			throw new PaymentNotAddedException();
+		}
 	}
 
 	@Override
@@ -35,7 +43,8 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public boolean update(PaymentUpdateRequestDTO request) {
+	public boolean update(PaymentUpdateRequestDTO request) throws PaymentNotUpdatedException {
+		try {
 		Payment row = payment_table.findById(request.id).get();
 		row.setTransaction(request.transaction);
 		row.setDate(request.date);
@@ -44,12 +53,21 @@ public class PaymentServiceImpl implements PaymentService {
 		row.setDate(request.date);
 		payment_table.save(row);
 		return true;
+		}
+		catch(Exception e) {
+			throw new PaymentNotUpdatedException();
+		}
 	}
 
 	@Override
-	public boolean delete(int id) {
+	public boolean delete(int id) throws PaymentNotDeletedException {
+		try {
 		payment_table.deleteById(id);
 		return true;
+		}
+		catch(Exception e) {
+			throw new PaymentNotDeletedException();
+		}
 	}
 
 }

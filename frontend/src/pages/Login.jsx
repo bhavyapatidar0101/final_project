@@ -19,9 +19,11 @@ function Login(){
         setEmail(e);
         if(!ValidationService.validateEmail(email)){
             setError(<span className='text-danger'><ClearIcon/> Invalid E-mail</span>);
+            return false;
         }
         else{
             setError(<span className='text-success'><DoneIcon/> Valid E-mail</span>);
+            return true;
         }
 
     }
@@ -31,8 +33,7 @@ function Login(){
 
 
     async function login(){
-        if(!ValidationService.validateEmail(email)){
-            setError("Invalid Email");
+        if(!checkEmail(email)){
             return;
         }
      

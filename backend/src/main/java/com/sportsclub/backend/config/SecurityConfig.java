@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.sportsclub.backend.auth.JwtAuthFilter;
-import com.sportsclub.backend.auth.UserInfoService; 
+import com.sportsclub.backend.service.UserInfoService; 
   
 @Configuration
 @EnableWebSecurity
@@ -40,7 +40,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
         return http.csrf().disable().cors().and()
                 .authorizeHttpRequests() 
-                .requestMatchers("/auth/welcome", "/auth/register", "/auth/login").permitAll() 
+                .requestMatchers("/auth/welcome", "/auth/register", "/auth/login","/user/add").permitAll() 
+                .requestMatchers("/v3/**","/swagger-ui/**","/swagger-ui.html").permitAll()
                 .and() 
                 .authorizeHttpRequests().requestMatchers("/**").authenticated() 
                 .and() 

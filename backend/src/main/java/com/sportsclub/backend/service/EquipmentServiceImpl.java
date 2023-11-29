@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sportsclub.backend.dto.*;
+import com.sportsclub.backend.exceptions.EquipmentNotAddedException;
+import com.sportsclub.backend.exceptions.EquipmentNotDeletedException;
+import com.sportsclub.backend.exceptions.EquipmentNotUpdatedException;
 import com.sportsclub.backend.model.*;
 import com.sportsclub.backend.repository.*;
 
@@ -33,7 +36,9 @@ public class EquipmentServiceImpl implements EquipmentService{
 	}
 
 	@Override
-	public boolean add(EquipmentAddRequestDTO request) {
+	public boolean add(EquipmentAddRequestDTO request) throws EquipmentNotAddedException{
+		
+		try {
 		Equipment eq = new Equipment();
 		eq.setName(request.name);
 		eq.setDescription(request.description);
@@ -42,16 +47,26 @@ public class EquipmentServiceImpl implements EquipmentService{
 		eq.setCourse(course_table.findById(request.course_id).get());
 		equipment_table.save(eq);
 		return true;
+		}
+		catch(Exception e) {
+			throw new EquipmentNotAddedException();
+		}
 	}
 
 	@Override
-	public boolean delete(int id) {
+	public boolean delete(int id) throws EquipmentNotDeletedException{
+	try{
 		equipment_table.deleteById(id);
 		return true;
 	}
+	catch(Exception e) {
+		throw new EquipmentNotDeletedException();
+	}
+	}
 
 	@Override
-	public boolean update(EquipmentUpdateRequestDTO request) {
+	public boolean update(EquipmentUpdateRequestDTO request) throws EquipmentNotUpdatedException {
+		try {
 		Equipment eq = equipment_table.findById(request.id).get();
 		eq.setName(request.name);
 		eq.setDescription(request.description);
@@ -60,6 +75,10 @@ public class EquipmentServiceImpl implements EquipmentService{
 		eq.setCourse(course_table.findById(request.course_id).get());
 		equipment_table.save(eq);
 		return true;
+		}
+		catch(Exception e) {
+			throw new EquipmentNotUpdatedException();
+		}
 	}
 
 	@Override

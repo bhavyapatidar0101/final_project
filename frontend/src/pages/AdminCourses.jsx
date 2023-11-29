@@ -82,7 +82,7 @@ function AdminCourses(){
         UserService.details().then((response)=>{
             let resp = response;
             console.log(resp)
-            setAdmin(resp);
+            setAdmin(resp.data);
         });
 
         CourseService.getAll().then((response)=>{
